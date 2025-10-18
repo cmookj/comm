@@ -233,6 +233,30 @@ template <typename T> struct message {
         return desc.str();
     }
 
+    template <typename data_type>
+    std::vector<data_type>
+    decode () const {
+        constexpr std::size_t  elem_size = sizeof (data_type);
+        std::size_t            count     = _body.size() / elem_size;
+        std::vector<data_type> decoded (count);
+
+        for (std::size_t i = 0; i < count; ++i) {
+            data_type v{};
+            std::memcpy (&v, _body.data() + elem_size * i, elem_size);
+            if constexpr (std::is_integral_v<data_type>) {
+                boost::endian::big_to_native_inplace (v);
+            } else if constexpr (std::is_floating_point_v<data_type>) {
+                char buf[elem_size];
+                std::memcpy (buf, _body.data() + elem_size * i, elem_size);
+                network_to_host_inplace (buf, elem_size);
+                std::memcpy (&v, buf, elem_size);
+            }
+            decoded[i] = v;
+        }
+        return decoded;
+    }
+
+#if false
     // Read (2 * the number of specified length) bytes from the body and
     // construct a vector of 2 byte integers.
     std::vector<std::int16_t>
@@ -302,6 +326,7 @@ template <typename T> struct message {
         }
         return decoded;
     }
+#endif
 
     // Read (the number of specified length) bytes from the body and
     // construct a string.

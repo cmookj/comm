@@ -58,162 +58,104 @@ template <typename T> struct random_float_gen {
     std::uniform_real_distribution<T> dist;
 };
 
-TEST (MessageTest, UInt8Test) {
+template <typename data_type>
+void
+test_integral () {
     gpw::net::message<uint16_t> msg;
-    random_int_gen<uint8_t>     gen;
+    random_int_gen<data_type>   gen;
 
     for (size_t i = 0; i < max_test_count; ++i) {
         auto input = gen();
 
         msg << input;
 
-        uint8_t output;
+        data_type output;
         msg >> output;
 
         EXPECT_EQ (input, output);
     }
 }
 
-TEST (MessageTest, Int8Test) {
+TEST (MessageTest, UInt8Test) { test_integral<uint8_t>(); }
+TEST (MessageTest, Int8Test) { test_integral<int8_t>(); }
+TEST (MessageTest, UInt16Test) { test_integral<uint16_t>(); }
+TEST (MessageTest, Int16Test) { test_integral<int16_t>(); }
+TEST (MessageTest, UInt32Test) { test_integral<uint32_t>(); }
+TEST (MessageTest, Int32Test) { test_integral<int32_t>(); }
+TEST (MessageTest, UInt64Test) { test_integral<uint64_t>(); }
+TEST (MessageTest, Int64Test) { test_integral<int64_t>(); }
+
+template <typename data_type>
+void
+test_floating_point () {
     gpw::net::message<uint16_t> msg;
-    random_int_gen<int8_t>      gen;
+    random_float_gen<data_type> gen;
 
     for (size_t i = 0; i < max_test_count; ++i) {
         auto input = gen();
 
         msg << input;
 
-        int8_t output;
-        msg >> output;
-
-        EXPECT_EQ (input, output);
-    }
-}
-
-TEST (MessageTest, UInt16Test) {
-    gpw::net::message<uint16_t> msg;
-    random_int_gen<uint16_t>    gen;
-
-    for (size_t i = 0; i < max_test_count; ++i) {
-        auto input = gen();
-
-        msg << input;
-
-        uint16_t output;
-        msg >> output;
-
-        EXPECT_EQ (input, output);
-    }
-}
-
-TEST (MessageTest, Int16Test) {
-    gpw::net::message<uint16_t> msg;
-    random_int_gen<int16_t>     gen;
-
-    for (size_t i = 0; i < max_test_count; ++i) {
-        auto input = gen();
-
-        msg << input;
-
-        int16_t output;
-        msg >> output;
-
-        EXPECT_EQ (input, output);
-    }
-}
-
-TEST (MessageTest, UInt32Test) {
-    gpw::net::message<uint16_t> msg;
-    random_int_gen<uint32_t>    gen;
-
-    for (size_t i = 0; i < max_test_count; ++i) {
-        auto input = gen();
-
-        msg << input;
-
-        uint32_t output;
-        msg >> output;
-
-        EXPECT_EQ (input, output);
-    }
-}
-
-TEST (MessageTest, Int32Test) {
-    gpw::net::message<uint16_t> msg;
-    random_int_gen<int32_t>     gen;
-
-    for (size_t i = 0; i < max_test_count; ++i) {
-        auto input = gen();
-
-        msg << input;
-
-        int32_t output;
-        msg >> output;
-
-        EXPECT_EQ (input, output);
-    }
-}
-
-TEST (MessageTest, UInt64Test) {
-    gpw::net::message<uint16_t> msg;
-    random_int_gen<uint64_t>    gen;
-
-    for (size_t i = 0; i < max_test_count; ++i) {
-        auto input = gen();
-
-        msg << input;
-
-        uint64_t output;
-        msg >> output;
-
-        EXPECT_EQ (input, output);
-    }
-}
-
-TEST (MessageTest, Int64Test) {
-    gpw::net::message<uint16_t> msg;
-    random_int_gen<int64_t>     gen;
-
-    for (size_t i = 0; i < max_test_count; ++i) {
-        auto input = gen();
-
-        msg << input;
-
-        int64_t output;
-        msg >> output;
-
-        EXPECT_EQ (input, output);
-    }
-}
-
-TEST (MessageTest, FloatTest) {
-    gpw::net::message<uint16_t> msg;
-    random_float_gen<float>     gen;
-
-    for (size_t i = 0; i < max_test_count; ++i) {
-        auto input = gen();
-
-        msg << input;
-
-        float output;
+        data_type output;
         msg >> output;
 
         EXPECT_NEAR (input, output, 1e-12);
     }
 }
 
-TEST (MessageTest, DoubleTest) {
-    gpw::net::message<uint16_t> msg;
-    random_float_gen<double>    gen;
+TEST (MessageTest, FloatTest) { test_floating_point<float>(); }
+TEST (MessageTest, DoubleTest) { test_floating_point<double>(); }
 
+template <typename data_type>
+void
+test_vector_integral () {
+    gpw::net::message<uint16_t> msg;
+    random_int_gen<data_type>   gen;
+
+    std::vector<data_type> input_v;
     for (size_t i = 0; i < max_test_count; ++i) {
         auto input = gen();
-
         msg << input;
+        input_v.push_back (input);
+    }
 
-        double output;
-        msg >> output;
+    std::vector<data_type> vec;
+    vec = msg.decode<data_type>();
 
-        EXPECT_NEAR (input, output, 1e-12);
+    for (size_t i = 0; i < max_test_count; ++i) {
+        EXPECT_EQ (input_v[i], vec[i]);
     }
 }
+
+TEST (MessageTest, UkInt8VectorTest) { test_vector_integral<uint8_t>(); }
+TEST (MessageTest, Int8VectorTest) { test_vector_integral<int8_t>(); }
+TEST (MessageTest, UInt16VectorTest) { test_vector_integral<uint16_t>(); }
+TEST (MessageTest, Int16VectorTest) { test_vector_integral<int16_t>(); }
+TEST (MessageTest, UInt32VectorTest) { test_vector_integral<uint32_t>(); }
+TEST (MessageTest, Int32VectorTest) { test_vector_integral<int32_t>(); }
+TEST (MessageTest, UInt64VectorTest) { test_vector_integral<uint64_t>(); }
+TEST (MessageTest, Int64VectorTest) { test_vector_integral<int64_t>(); }
+
+template <typename data_type>
+void
+test_vector_floating_point () {
+    gpw::net::message<uint16_t> msg;
+    random_float_gen<data_type> gen;
+
+    std::vector<data_type> input_v;
+    for (size_t i = 0; i < max_test_count; ++i) {
+        auto input = gen();
+        msg << input;
+        input_v.push_back (input);
+    }
+
+    std::vector<data_type> vec;
+    vec = msg.decode<data_type>();
+
+    for (size_t i = 0; i < max_test_count; ++i) {
+        EXPECT_NEAR (input_v[i], vec[i], 1e-12);
+    }
+}
+
+TEST (MessageTest, FloatVectorTest) { test_vector_floating_point<float>(); }
+TEST (MessageTest, DoubleVectorTest) { test_vector_floating_point<double>(); }
