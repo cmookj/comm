@@ -1,8 +1,5 @@
 //
 //  SimpleClient.cpp
-//  NetClient
-//
-//  Created by Changmook Chun on 2020/12/26.
 //
 
 #include <chrono>
@@ -122,7 +119,6 @@ main (int argc, const char* argv[]) {
 
     done_thread_ping = true;
     if (thread_ping.joinable()) thread_ping.join();
-    // if (thread_key_input.joinable()) thread_key_input.join();
 
     return 0;
 }
