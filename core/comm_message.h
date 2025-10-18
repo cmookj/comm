@@ -1,11 +1,11 @@
 //
-//  net_message.h
+//  comm_message.h
 //
 
-#ifndef NET_MESSAGE_H
-#define NET_MESSAGE_H
+#ifndef COMM_MESSAGE_H
+#define COMM_MESSAGE_H
 
-#include "core/comm_common.h"
+#include "core/comm_log.h"
 
 #include <boost/endian/conversion.hpp>
 #include <cstdlib>

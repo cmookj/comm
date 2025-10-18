@@ -1,9 +1,9 @@
 //
-//  net_common.h
+//  comm_log.h
 //
 
-#ifndef NET_COMMON_H
-#define NET_COMMON_H
+#ifndef COMM_LOG_H
+#define COMM_LOG_H
 
 #include <algorithm>
 #include <chrono>
