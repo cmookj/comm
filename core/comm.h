@@ -1,12 +1,12 @@
 //
-//  gpw_net.h
+//  comm.h
 //
 
-#ifndef GPW_NET_H
-#define GPW_NET_H
+#ifndef GPW_COMM_H
+#define GPW_COMM_H
 
 #include "core/comm_client.h"
-#include "core/comm_common.h"
+#include "core/comm_log.h"
 #include "core/comm_message.h"
 #include "core/comm_server.h"
 

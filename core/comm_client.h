@@ -1,12 +1,12 @@
 //
-//  net_client.h
+//  comm_client.h
 //
 
-#ifndef NET_CLIENT_H
-#define NET_CLIENT_H
+#ifndef COMM_CLIENT_H
+#define COMM_CLIENT_H
 
-#include "core/comm_common.h"
 #include "core/comm_connection.h"
+#include "core/comm_log.h"
 #include "core/comm_message.h"
 #include "core/comm_tsqueue.h"
 

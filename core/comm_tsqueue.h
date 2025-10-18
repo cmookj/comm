@@ -1,11 +1,11 @@
 //
-//  net_tsqueue.h
+//  comm_tsqueue.h
 //
 
-#ifndef NET_TSQUEUE_H
-#define NET_TSQUEUE_H
+#ifndef COMM_TSQUEUE_H
+#define COMM_TSQUEUE_H
 
-#include "core/comm_common.h"
+#include "core/comm_log.h"
 
 namespace gpw {
 namespace net {

@@ -1,5 +1,5 @@
 //
-//  SimpleServer.cpp
+//  server.cpp
 //
 
 #include "core/comm.h"

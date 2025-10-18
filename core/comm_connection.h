@@ -1,11 +1,11 @@
 //
-//  net_connection.h
+//  comm_connection.h
 //
 
-#ifndef NET_CONNECTION_H
-#define NET_CONNECTION_H
+#ifndef COMM_CONNECTION_H
+#define COMM_CONNECTION_H
 
-#include "core/comm_common.h"
+#include "core/comm_log.h"
 #include "core/comm_message.h"
 #include "core/comm_tsqueue.h"
 
