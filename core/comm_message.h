@@ -58,7 +58,7 @@ network_to_host_inplace (char* buf, std::size_t size) {
     }
 }
 
-// message header is sent at start of all messages.  The template allows us
+// Message header is sent at start of all messages.  The template allows us
 // to use "enum class" to ensure that the messages are valid at compile time.
 // Note that the length of the message header should be the same regardless of
 // the architecture of the system running this code.  (Especially for 32-bit and
