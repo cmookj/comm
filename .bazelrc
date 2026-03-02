@@ -1,0 +1,19 @@
+common --enable_platform_specific_config
+
+# Default standard
+build --config=cxx23
+
+# Unix-like compilers
+build:cxx17 --cxxopt=-std=c++17
+build:cxx20 --cxxopt=-std=c++20
+build:cxx23 --cxxopt=-std=c++23
+build:cxx26 --cxxopt=-std=c++2c
+
+# Windows
+build:windows:cxx17 --cxxopt=/std:c++17
+build:windows:cxx20 --cxxopt=/std:c++20
+build:windows:cxx23 --cxxopt=/std:c++23
+build:windows:cxx26 --cxxopt=/std:c++latest
+
+# macOS deployment
+build:macos --macos_minimum_os=13.3
